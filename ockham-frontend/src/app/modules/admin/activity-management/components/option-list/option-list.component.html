@@ -1,0 +1,34 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Activity options
+      </mat-panel-title>
+      <mat-panel-description>
+        Currently {{ options.length }} options added
+      </mat-panel-description>
+
+    </mat-expansion-panel-header>
+    <table *ngIf="options.length !== 0" class="table table-striped table-light table-bordered w-100">
+      <tr>
+        <th>Question</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Actions</th>
+      </tr>
+      <tr *ngFor="let option of options">
+        <td>{{ option.question }}</td>
+        <td>{{ option.type.name }}</td>
+        <td>{{ option.required }}</td>
+        <td>
+          <i class="material-icons pointer text-danger" (click)="delete(option)">
+            delete
+          </i>
+          <i *ngIf="canEdit" class="material-icons pointer text-warning" (click)="edit(option)">
+            edit
+          </i>
+        </td>
+      </tr>
+    </table>
+  </mat-expansion-panel>
+</mat-accordion>

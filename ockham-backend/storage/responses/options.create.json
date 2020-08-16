@@ -1,0 +1,9 @@
+{
+    "id": 2,
+    "question": "Beer or Cola?",
+    "required": true,
+    "type": {
+        "id": 1,
+        "name": "string"
+    }
+}

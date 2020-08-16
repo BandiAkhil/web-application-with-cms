@@ -1,0 +1,11 @@
+[
+    {
+        "id": 1,
+        "question": "Would you like pizza?",
+        "required": true,
+        "type": {
+            "id": 2,
+            "name": "boolean"
+        }
+    }
+]

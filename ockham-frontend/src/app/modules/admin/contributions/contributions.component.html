@@ -1,0 +1,46 @@
+<app-arrow-back routerLink="/admin"></app-arrow-back>
+<div class="row">
+  <div class="col-12">
+    <h1>Manage contributions</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <app-pagination-table 
+      [data]="contributions" 
+      [headers]="['ID', 'Identifier', 'Cost']"
+      [keys]="['id', 'identifier', 'cost_cents']" 
+      [columnDefs]="columnDefs"
+      [showActionColumn]="true" 
+      (edit)="onEdit($event)" 
+      (delete)="onDelete($event)">
+    </app-pagination-table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-auto">
+    <button type="button" class="btn btn-primary" routerLink="add">
+      <i class="material-icons btn-icon">
+        add
+      </i>
+      Add contribution
+    </button>
+  </div>
+  <div class="col-auto ml-auto">
+    <button type="button" class="btn btn-primary" routerLink="/admin/members">
+      <i class="material-icons btn-icon">
+        people_alt
+      </i>
+      Manage member contributions
+    </button>
+  </div>
+  <div class="col-auto">
+    <button type="button" class="btn btn-primary" (click)="onExport()">
+      <i class="material-icons btn-icon">
+        cloud_download
+      </i>
+      Export contribution
+    </button>
+  </div>
+</div>

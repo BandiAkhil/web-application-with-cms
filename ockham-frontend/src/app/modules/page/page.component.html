@@ -1,0 +1,12 @@
+<div class="custom-padding">
+  <div class="container" *ngIf="page">
+    <div class="float-right" *showIfRole="'board'">
+      <i class="material-icons pointer text-warning" [routerLink]="'/admin/pages/' + page.slug + '/edit'">edit</i>
+      <i class="material-icons pointer text-danger" (click)="deletePage()">delete</i>
+    </div>
+    <h1 class="page-title">{{ page.title }}</h1>
+    <div class="content" [innerHTML]="content">
+    </div>
+    <app-download-list *ngIf="page.files.length" [files]="page.files"></app-download-list>
+  </div>
+</div>

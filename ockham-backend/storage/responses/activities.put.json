@@ -1,0 +1,34 @@
+{
+    "id": 1,
+    "title": "New Year Celebration",
+    "description": "new description",
+    "image": null,
+    "location": "At home",
+    "price_cents": 500,
+    "created_at": "2020-04-13 16:56:51",
+    "updated_at": "2020-04-13 16:56:51",
+    "start_date": "2020-12-01 15:00:00",
+    "end_date": "2020-12-01 20:00:00",
+    "registration_opens": "2020-11-01 00:00:00",
+    "registration_closes": "2020-11-30 23:59:59",
+    "flexible_columns": [],
+    "options": [
+        {
+            "id": 1,
+            "question": "Would you like pizza?",
+            "required": true,
+            "type": {
+                "id": 2,
+                "name": "boolean"
+            }
+        }
+    ],
+    "committee": {
+        "id": 1,
+        "name": "Prof. Madyson Luettgen",
+        "description": "Error rerum voluptatem omnis dolorum. Quia aperiam magni vel ut. Dolor neque illo corporis ullam aut perferendis non dolorem. Eum in nobis consequuntur vel.",
+        "created_at": "2020-03-28 11:55:32",
+        "updated_at": "2020-03-28 11:55:32"
+    },
+    "files": []
+}

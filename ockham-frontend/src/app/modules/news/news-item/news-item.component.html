@@ -1,0 +1,15 @@
+<div class="custom-padding">
+  <div class="container">
+    <app-arrow-back routerLink="/news"></app-arrow-back>
+    <div class="content" *ngIf="newsItem">
+      <h2 class="article-title">{{ newsItem.title }}</h2>
+      <p><small>
+        Posted: {{ newsItem.created_at }}
+        <br>
+        Last updated: {{ newsItem.updated_at }}
+      </small></p>
+      <p [innerHTML]="content"></p>
+      <app-download-list *ngIf="newsItem.files.length" [files]="newsItem.files"></app-download-list>
+    </div>
+  </div>
+</div>

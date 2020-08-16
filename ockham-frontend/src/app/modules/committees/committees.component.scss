@@ -1,0 +1,10 @@
+ul li {
+  margin: 0in 0in 8pt;
+  color: theme-color("primary");
+}
+
+@media (max-width: 768px) {
+  button {
+    margin-bottom: 10px;
+  }
+}

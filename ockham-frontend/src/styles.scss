@@ -1,0 +1,214 @@
+//add style here if you want to override bootstrap defaults sass variables
+@import "src/assets/style/custom-colors.scss";
+
+//Override default bootstrap theme colors
+$theme-colors: ("primary": map-get($ockham-frontend-grey, 600), "secondary": map-get($ockham-frontend-red, 500));
+
+//Override bootstap colors
+$colors: ("dark-gray": map-get($ockham-frontend-grey,800),"light-gray": map-get($ockham-frontend-grey,100), "mid-gray": map-get($ockham-frontend-grey,300));
+
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
+//TODO: import other colors instead of this one?
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@import "../node_modules/angular-notifier/styles.scss";
+
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
+//get theme-color by key
+@function theme-color($key: "primary") {
+  @return map-get($theme-colors, $key);
+}
+
+//get color by key
+@function color($key: "light-gray") {
+  @return map-get($colors, $key);
+}
+
+
+
+/*
+ Global Style
+*/
+body, html {
+  height: 100%;
+}
+
+h1 {
+  text-transform: uppercase;
+}
+
+p {
+  color: theme-color("primary");
+}
+
+.custom-padding {
+  padding-top   : 50px;
+  padding-bottom: 50px;
+}
+
+a {
+  color: theme-color("secondary");
+}
+
+.emphasize-text {
+  color: theme-color("secondary");
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1170px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.page-title {
+  margin-bottom: 30px;
+}
+
+.bg-dark-section {
+  background-color: color("dark-gray");
+  h1, h3, h4, h6, label {
+    color: color("light-gray");
+  }
+
+  h5 {
+    color: theme-color("secondary");
+  }
+
+  p, small {
+    color: map-get($ockham-frontend-grey, 400);
+  }
+
+  a {
+    color: theme-color("secondary") !important;
+  }
+}
+
+.icon-secondary {
+  color: theme-color("secondary");
+}
+
+.btn-icon {
+  font-size: $btn-font-size;
+}
+
+.text-icon {
+  font-size: $font-size-base;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.form-control {
+  border-radius: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+.article-title {
+  margin-bottom: 0;
+}
+
+.sepa-container {
+  background-color: #3b3b3b;
+  box-shadow: inset 0 0 20px #000000;
+  -moz-box-shadow : inset 0 0 20px #000000;
+  -webkit-box-shadow: inset 0 0 20px #000000;
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
+
+/*
+  Needed for showing datepicker
+  in the modal
+*/
+.cdk-overlay-container{
+  z-index:2000 !important;
+}
+.date-picker-input {
+  border: 1px solid #ced4da;
+  padding: 0.375rem 0.75rem !important;
+}
+.auth-wrapper {
+  width        : 50%;
+  padding      : 40px;
+  border-radius: 10px;
+  overflow     : hidden;
+  box-shadow        : 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow   : 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+  -o-box-shadow     : 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+  -ms-box-shadow    : 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+  @media (max-width: 768px) {
+    width: 90% !important;
+  }
+}
+
+.text-archive {
+  color: $archive-color;
+}
+
+.btn-archive {
+  color: $light-primary-text;
+  background-color: $archive-color;
+}
+
+.alert-archive {
+  color: #004085;
+  background-color: #cce5ff;
+}
+
+notifier-container {
+  p {
+    color: $light-primary-text;
+  }
+
+  svg {
+    display: block;
+    margin: auto;
+  }
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: map-get($ockham-frontend-grey, 600);
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: map-get($ockham-frontend-red, 600);
+}
+
+li.nav-item.dropdown:hover {
+  .dropdown-menu {
+    display: block;
+    margin: 0;
+  }
+}
+
+li.nav-item.dropdown a:hover {
+  color: map-get($ockham-frontend-red, 600);
+}
+
+li.nav-item.dropdown a:active {
+  background-color: map-get($ockham-frontend-grey, 300);
+}
+
+li.nav-item.dropdown a:target {
+  color: map-get($ockham-frontend-red, 600);
+}
+

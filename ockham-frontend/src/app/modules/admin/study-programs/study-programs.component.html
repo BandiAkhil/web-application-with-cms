@@ -1,0 +1,28 @@
+<app-arrow-back routerLink="/admin"></app-arrow-back>
+<div class="row">
+  <div class="col-sm-8 col-12">
+    <h1>Manage study programs</h1>
+  </div>
+  <div class="col-sm-3 col-12">
+    <div class="row justify-content-end">
+      <button type="button" class="btn btn-primary" routerLink="add">
+        <i class="material-icons btn-icon">
+          add
+        </i>
+        Add study program
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <app-pagination-table
+      [data]="programs"
+      [headers]="['ID', 'Short name', 'Full name']"
+      [keys]="['id', 'short_name', 'full_name']"
+      [showActionColumn]="true"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)">
+    </app-pagination-table>
+  </div>
+</div>

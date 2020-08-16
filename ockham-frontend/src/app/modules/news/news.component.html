@@ -1,0 +1,24 @@
+<div class="custom-padding">
+  <div class="container">
+    <div class="content">
+      <div class="row">
+        <div class="col-auto">
+          <h1>News</h1>
+        </div>
+        <div class="col-auto ml-auto" *showIfRole="'board'">
+          <button class="btn btn-primary" routerLink="/admin/news">Manage news</button>
+        </div>
+      </div>
+
+      <br>
+      <app-news-list [newsList]="news | slice: (paginationPage-1) * paginationSize : (paginationPage-1) * paginationSize + paginationSize"></app-news-list>
+      <ngb-pagination class="justify-content-center d-flex"
+                      [(page)]="paginationPage"
+                      [pageSize]="paginationSize"
+                      [collectionSize]="news.length"
+                      [maxSize]="7"
+                      [rotate]="true"></ngb-pagination>
+    </div>
+  </div>
+</div>
+

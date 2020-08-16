@@ -1,0 +1,79 @@
+<form [formGroup]="pageForm" (ngSubmit)="onSave()">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="title">Title*</label>
+        <input id="title" type="text" class="form-control" formControlName="title"
+               [ngClass]="{ 'is-invalid': submitted && f.title.errors }" (ngModelChange)="generateSlug($event)">
+        <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+          <div *ngIf="f.title.errors.required">Title is required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="slug">Slug*</label>
+        <input id="slug" type="text" class="form-control" formControlName="slug"
+               [ngClass]="{ 'is-invalid': submitted && f.slug.errors }">
+        <div *ngIf="submitted && f.slug.errors" class="invalid-feedback">
+          <div *ngIf="f.slug.errors.required; else otherErrors">Slug is required</div>
+          <ng-template #otherErrors>
+            <div *ngIf="f.slug.errors.invalidSlug">Slug can only contain letters, numbers, dashes and underscores</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="page-group">Page group*</label>
+        <div class="input-group">
+          <select id="page-group" class="form-control" formControlName="page_group_id"
+                  [ngClass]="{ 'is-invalid': submitted && f.page_group_id.errors }">
+            <option *ngFor="let g of pageGroups" [value]="g.id">
+              {{ g.name }}
+            </option>
+          </select>
+          <div class="input-group-append">
+            <button type="button" class="btn btn-primary" (click)="openManagePageGroupsModal()">
+              <i class="material-icons btn-icon">
+                settings
+              </i>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="submitted && f.page_group_id.errors" class="invalid-feedback">
+          <div *ngIf="f.page_group_id.errors.required">Page group is required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="content">Content*</label>
+        <app-html-editor id="content" name="content" formControlName="content" [ngClass]="{ 'is-invalid': submitted && f.content.errors }"></app-html-editor>
+        <div *ngIf="submitted && f.content.errors" class="invalid-feedback">
+          <div *ngIf="f.content.errors.required">Content is required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-files-list action="upload" [files]="page ? page.files: []" (delete)="deleteFile($event)"></app-files-list>
+  <div class="row">
+    <div class="col-12">
+      <app-files-upload formControlName="uploadedFiles"></app-files-upload>
+    </div>
+  </div>
+
+  <div class="row pt-4">
+    <div class="col-auto">
+      <button type="submit" class="btn btn-success">Save</button>
+    </div>
+    <div class="col-auto ml-auto">
+      <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+    </div>
+  </div>
+</form>

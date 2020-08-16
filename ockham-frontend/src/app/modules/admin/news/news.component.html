@@ -1,0 +1,31 @@
+<app-arrow-back routerLink="/admin"></app-arrow-back>
+<div class="row">
+  <div class="col-12">
+    <h1>Manage news</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <app-pagination-table [data]="news" [headers]="['Title', 'Created at', 'Updated at']"
+      [keys]="['title', 'created_at', 'updated_at']" [showActionColumn]="true" (edit)="onEdit($event)" (delete)="onDelete($event)">
+    </app-pagination-table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-auto">
+    <button type="button" class="btn btn-primary" routerLink="add">
+      <i class="material-icons btn-icon">
+        add
+      </i>
+      Post news
+    </button>
+  </div>
+  <div class="col-auto ml-auto">
+    <button type="button" class="btn btn-primary" routerLink="columns">
+      <i class="material-icons btn-icon">
+        storage
+      </i>
+      Manage extra columns
+    </button>
+  </div>
+</div>

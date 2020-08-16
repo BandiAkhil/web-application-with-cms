@@ -1,0 +1,22 @@
+<div class="custom-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-auto col-12">
+        <h1 class="page-title">Committees</h1>
+      </div>
+      <div class="col-sm-auto ml-auto col-12">
+        <button class="btn btn-primary" routerLink="/admin/committees" *showIfRole="'committee_member'">Manage committees</button>
+      </div>
+    </div>
+    <div class="content">
+      <app-committees-list [committees]="committees | slice: (paginationPage-1) * paginationSize : (paginationPage-1) * paginationSize + paginationSize"></app-committees-list>
+      <ngb-pagination class="justify-content-center d-flex"
+                      [(page)]="paginationPage"
+                      [pageSize]="paginationSize"
+                      [collectionSize]="committees.length"
+                      [maxSize]="7"
+                      [rotate]="true">
+      </ngb-pagination>
+    </div>
+  </div>
+</div>

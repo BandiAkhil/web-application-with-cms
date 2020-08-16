@@ -1,0 +1,49 @@
+<div class="slider">
+  <app-slider [slides]="slides"></app-slider>
+</div>
+<div class="custom-padding section-one">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-sm-8">
+       <app-welcome></app-welcome>
+      </div>
+      <div class="col-12 col-sm-4">
+        <div fxLayout="column" fxFlexFill fxLayoutGap="10px">
+          <div class="contact-room">
+            <h4>OCKHAM ROOM</h4>
+            <p>You find us at <span class="emphasize-text">Technohal 1334 C.</span></p>
+          </div>
+          <div>
+            <h4>OUR SPONSORS</h4>
+            <br>
+            <img class="img-fluid" src="assets/img/Logo/ThalesLogo.png" alt="Ockham">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="custom-padding bg-dark-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-sm-8">
+        <h3>LATEST NEWS</h3>
+        <br>
+        <app-news-list [newsList]="news"></app-news-list>
+        <br>
+        <button class="btn btn-primary" routerLink="/news">Checkout all the news</button>
+        <br>
+        <br>
+      </div>
+      <div class="col-12 col-sm-4">
+        <h3>UPCOMING ACTIVITIES</h3>
+        <br>
+        <app-activity-list [activities]="activities"></app-activity-list>
+        <br>
+        <button class="btn btn-primary" routerLink="/activities">Checkout all the activities</button>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>

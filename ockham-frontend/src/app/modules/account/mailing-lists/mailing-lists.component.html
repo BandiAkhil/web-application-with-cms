@@ -1,0 +1,21 @@
+<h3 class="pb-4">Mailing lists</h3>
+<table class="table w-100"> 
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let mailingList of mailingLists">
+      <td>
+        {{ mailingList.name }}
+        &nbsp;<span class="badge badge-success" *ngIf="mailingList.subscribed">Subscribed</span>
+      </td>
+      <td>
+        <button type="button" class="btn btn-sm btn-success" *ngIf="!mailingList.subscribed" (click)="subscribeToMailingList(mailingList)">Subscribe</button>
+        <button type="button" class="btn btn-sm btn-danger" *ngIf="mailingList.subscribed" (click)="unsubscribeFromMailingList(mailingList)">Unsubscribe</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

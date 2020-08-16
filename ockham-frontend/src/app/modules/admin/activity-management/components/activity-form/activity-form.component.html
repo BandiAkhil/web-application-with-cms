@@ -1,0 +1,139 @@
+<form class="editForm" [formGroup]="activityForm">
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="title">Title*</label>
+      <input id="title" type="text" class="form-control" formControlName="title"
+             [ngClass]="{ 'is-invalid': submitted && f.title.errors }" placeholder="Title">
+      <div *ngIf="f.title.errors && submitted" class="invalid-feedback">
+        Title is required!
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="description">Description*</label>
+    <app-html-editor id="description" name="description" formControlName="description" required
+                     [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+    </app-html-editor>
+    <div *ngIf="f.description.errors && submitted" class="invalid-feedback">
+      Description is required
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="location">Location*</label>
+      <input type="text" class="form-control" formControlName="location"
+             [ngClass]="{ 'is-invalid': submitted && f.location.errors }" id="location">
+      <div *ngIf="f.location.errors && submitted" class="invalid-feedback">
+        Location is required
+      </div>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="start_date">Start Date*</label>
+      <div class="input-group">
+        <input class="form-control" id="start_date" formControlName="start_date" [owlDateTime]="dt1"
+               [owlDateTimeTrigger]="dt1" placeholder="Date Time"
+               [ngClass]="{ 'is-invalid': submitted && (f.start_date.errors || activityForm.errors?.invalid_start_date) }">
+        <owl-date-time #dt1></owl-date-time>
+        <div *ngIf="submitted && (f.start_date.errors || activityForm.errors?.invalid_start_date)" class="invalid-feedback">
+          <ng-container *ngIf="f.start_date.errors?.required; else invalidStartDate">Start date is required</ng-container>
+          <ng-template #invalidStartDate>
+            Start date should be greater than the registration opening
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="end_date">End Date*</label>
+      <div class="input-group">
+        <input id="end_date" class="form-control" formControlName="end_date" [owlDateTime]="dt2"
+               [owlDateTimeTrigger]="dt2" placeholder="Date Time"
+               [ngClass]="{ 'is-invalid': submitted && (f.start_date.errors || activityForm.errors?.invalid_end_date) }">
+        <owl-date-time #dt2></owl-date-time>
+        <div *ngIf="submitted && (f.end_date.errors || activityForm.errors?.invalid_end_date)" class="invalid-feedback">
+          <ng-container *ngIf="f.end_date.errors?.required; else invalidEndDate">End date is required</ng-container>
+          <ng-template #invalidEndDate>
+            End date should be greater than the registration opening
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-4">
+      <label for="price">Price*</label>
+      <input id="price" type="number" min="0" step="0.01" placeholder="€ 0.00" class="form-control" formControlName="price"
+             [ngClass]="{ 'is-invalid': submitted && f.price.errors }">
+      <div *ngIf="f.price.errors && submitted" class="invalid-feedback">
+        <div *ngIf="f.price.errors.pattern">
+          Invalid price! Price should be an integer or have upto two decimal places
+        </div>
+        <div *ngIf="f.price.errors.min">
+          Invalid price! Price cannot be negative
+        </div>
+        <div *ngIf="f.price.errors.max">
+          Invalid price! Price too large
+        </div>
+        <div *ngIf="f.price.errors.required">
+          Price is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-4">
+      <label for="committee">Committee*</label>
+      <select id="committee" class="form-control" formControlName="committee_id"
+              [ngClass]="{ 'is-invalid': submitted && f.committee_id.errors }">
+        <option *ngFor="let c of committees" [value]="c.id"
+                [selected]="_activity ? _activity.committee.id == c.id : ''">
+          {{ c.name }}
+        </option>
+      </select>
+      <div *ngIf="f.committee_id.errors && submitted" class="invalid-feedback">
+        Committee is required
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+
+    <div class="form-group col-md-4">
+      <label for="registration_opens">Registration opens*</label>
+      <div class="input-group">
+        <input class="form-control" id="registration_opens" formControlName="registration_opens" [owlDateTime]="dt3"
+               [owlDateTimeTrigger]="dt3" placeholder="Date Time"
+               [ngClass]="{ 'is-invalid': submitted && f.registration_opens.errors }">
+        <owl-date-time #dt3></owl-date-time>
+        <div *ngIf="f.registration_opens.errors && submitted" class="invalid-feedback">
+          Registration opens is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="registration_closes">Registration closes:*</label>
+      <div class="input-group">
+        <input id="registration_closes" class="form-control" formControlName="registration_closes" [owlDateTime]="dt4"
+               [owlDateTimeTrigger]="dt4" placeholder="Date Time"
+               [ngClass]="{ 'is-invalid': submitted && (f.registration_closes.errors || activityForm.errors?.invalid_registration_closes) }">
+        <owl-date-time #dt4></owl-date-time>
+        <div *ngIf="submitted && (f.registration_closes.errors || activityForm.errors?.invalid_registration_closes)" class="invalid-feedback">
+          <ng-container *ngIf="f.registration_closes.errors?.required; else invalidRegistrationCloses">Registration opens is required</ng-container>
+          <ng-template #invalidRegistrationCloses>
+            Registration closes should be greater than the registration opens
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-flexible-column-form model="activities" formControlName="flexible_column_values"></app-flexible-column-form>
+  <app-files-list action="upload" [files]="_activity ? _activity.files : []" (delete)="deleteFile($event)"></app-files-list>
+  <div class="row mb-2">
+    <div class="col-12">
+      <app-files-upload formControlName="uploadedFiles"></app-files-upload>
+    </div>
+  </div>
+</form>
+<div *ngIf="_activity" fxLayout="row">
+  <button type="submit" [disabled]="!formDirty" class="btn btn-success" (click)="onSave()">Save changes</button>
+  <div fxFlex fxLayout="row" fxLayoutAlign="end">
+    <ng-content></ng-content>
+    <button class="btn btn-primary" routerLink="/admin/activities">Cancel</button>
+  </div>
+</div>

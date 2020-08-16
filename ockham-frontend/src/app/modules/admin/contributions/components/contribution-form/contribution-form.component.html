@@ -1,0 +1,32 @@
+<form [formGroup]="contributionForm" (ngSubmit)="onSave()">
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="identifier">Identifier*</label>
+        <input id="identifier" type="text" class="form-control" formControlName="identifier"
+               [ngClass]="{ 'is-invalid': submitted && f.identifier.errors }">
+        <div *ngIf="submitted && f.identifier.errors" class="invalid-feedback">
+          <div *ngIf="f.identifier.errors.required">Identifier is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="cost-cents">Cost*</label>
+        <input id="cost" type="number" class="form-control" formControlName="cost" min="0" step="0.01"
+               [ngClass]="{ 'is-invalid': submitted && f.cost.errors }">
+        <div *ngIf="submitted && f.cost.errors" class="invalid-feedback">
+          <div *ngIf="f.cost.errors.required">Cost is required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-auto">
+      <button type="submit" class="btn btn-success">Save</button>
+    </div>
+    <div class="col-auto ml-auto">
+      <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+    </div>
+  </div>
+</form>

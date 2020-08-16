@@ -1,0 +1,41 @@
+<form [formGroup]="cForm">
+
+  <label for="contributions">Contributions*</label>
+  <select id="contributions" class="form-control" formControlName="contribution_id"
+    [ngClass]="{ 'is-invalid': submitted && f.contribution_id.errors }">
+    <option *ngFor="let c of contributions" [value]="c.id">
+      {{ c.identifier }}
+    </option>
+  </select>
+  <div *ngIf="f.contribution_id.errors && submitted" class="invalid-feedback">
+    Contribution is required!
+  </div>
+
+
+  <label for="payment_method">Payment method*</label>
+  <input id="payment_method " class="form-control" formControlName="payment_method"
+    [ngClass]="{ 'is-invalid': submitted && f.payment_method.errors }">
+  <div *ngIf="f.payment_method.errors && submitted" class="invalid-feedback">
+    Payment method is required!
+  </div>
+
+  
+</form>
+
+<button *ngIf="!_mCont; else edit" type="submit" (click)="onSubmit()" class="btn btn-primary mt-2">
+  <i class="material-icons btn-icon">
+    add
+  </i>
+  Add Contribution
+</button>
+
+<ng-template #edit>  
+  <div fxLayout="row" fxLayoutGap="3px">
+    <button (click)="onSubmit()" class="btn btn-success mt-2">
+      Save changes
+    </button>
+    <button (click)="onCancel()" class="btn btn-secondary mt-2">
+      Cancel
+    </button>
+  </div>
+</ng-template>

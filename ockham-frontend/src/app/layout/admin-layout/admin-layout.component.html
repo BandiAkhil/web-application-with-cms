@@ -1,0 +1,8 @@
+<div fxLayout="column" class="admin-layout">
+  <app-header></app-header>
+  <div fxFlex class="bg-dark-section custom-padding">
+    <div class="container">
+      <router-outlet (activate)="onActivate()"></router-outlet>
+    </div>
+  </div>
+</div>

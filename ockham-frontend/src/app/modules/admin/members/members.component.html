@@ -1,0 +1,89 @@
+<app-arrow-back routerLink="/admin"></app-arrow-back>
+<div fxLayout="row">
+    <h1>Manage members</h1>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <app-pagination-table
+      [data]="members"
+      [headers]="headers"
+      [keys]="columns"
+      [showActionColumn]="true"
+      [customActionTemplate]="customActionTemplate"
+      [mode]="'backend'"
+      [total]="total"
+      (edit)="editMember($event)"
+      (delete)="deleteMember($event)"
+      (pageChanged)="onPageChange($event)"
+      (search)="search.next($event)">
+
+      <ng-template #customActionTemplate let-row>
+          <i class="material-icons pointer" (click)="viewContributions(row)">
+            monetization_on
+          </i>
+
+          <i class="material-icons pointer text-archive" *ngIf="!row.archived_at; else notArchived"
+            (click)="archiveMember(row)">
+            archive
+          </i>
+
+          <ng-template #notArchived>
+            <i class="material-icons text-primary" style="cursor: not-allowed">
+              archive
+            </i>
+          </ng-template>
+        </ng-template>
+
+    </app-pagination-table>
+  </div>
+</div>
+
+<div class="row pt-4">
+  <div class="col-sm-auto col-5">
+    <button type="button" class="btn btn-primary" routerLink="add">
+      <i class="material-icons btn-icon">
+        add
+      </i>
+      Add member
+    </button>
+  </div>
+  <div class="col-sm-auto ml-auto col-7">
+    <button type="button" class="btn btn-primary" routerLink="columns">
+      <i class="material-icons btn-icon">
+        storage
+      </i>
+      Manage extra columns
+    </button>
+  </div>
+  <div class="col-sm-auto col-6">
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-primary mb-1" (click)="fileUpload.click()">
+          <i class="material-icons btn-icon">
+            cloud_upload
+          </i>
+          Import members
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-center">
+        <small>
+          <a href="/api/resources/template.csv" target="_blank">Download template</a>
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-auto col-6">
+    <button type="button" class="btn btn-primary" (click)="getMembersExport()">
+      <i class="material-icons btn-icon">
+        cloud_download
+      </i>
+      Export members
+    </button>
+  </div>
+</div>
+
+<div class="d-none">
+  <input type="file" #fileUpload accept="text/csv" (change)="onMembersImport($event.target.files)">
+</div>

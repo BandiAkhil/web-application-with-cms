@@ -1,0 +1,7 @@
+<app-arrow-back routerLink="/admin/news"></app-arrow-back>
+<div class="row">
+  <div class="col-12">
+    <h1>Add news</h1>
+  </div>
+</div>
+<app-news-form (save)="onSave($event)" (cancel)="onCancel()"></app-news-form>

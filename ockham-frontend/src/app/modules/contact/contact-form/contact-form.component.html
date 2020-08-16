@@ -1,0 +1,48 @@
+<div class="container">
+  <h1 class="page-title"><b>Contact Form</b></h1>
+  <div class="content">
+    <form [formGroup]="contactForm" (ngSubmit)="submitMessage()">
+      <div class="form-group">
+        <label for="name">Name*</label>
+        <input id="name" type="text" class="form-control" formControlName="name"
+               [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+          <div *ngIf="f.name.errors.required">Name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email*</label>
+        <input id="email" type="email" class="form-control" formControlName="email"
+               [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+          <div *ngIf="f.email.errors.required">Email is required</div>
+          <div *ngIf="f.email.errors.email">Invalid email</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="subject">Subject*</label>
+        <input id="subject" type="text" class="form-control" formControlName="subject"
+               [ngClass]="{ 'is-invalid': submitted && f.subject.errors }">
+        <div *ngIf="submitted && f.subject.errors" class="invalid-feedback">
+          <div *ngIf="f.subject.errors.required">Subject is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="message">Message*</label>
+        <textarea rows="5" id="message" type="text" class="form-control" formControlName="message"
+               [ngClass]="{ 'is-invalid': submitted && f.message.errors }"></textarea>
+        <div *ngIf="submitted && f.message.errors" class="invalid-feedback">
+          <div *ngIf="f.message.errors.required">Message is required</div>
+        </div>
+        <br>
+        <small>
+          <p>This site is protected by reCAPTCHA and the Google
+            <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+            <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+          </p>
+        </small>
+      </div>
+      <button type="submit" class="btn btn-success">Send message</button>
+    </form>
+  </div>
+</div>

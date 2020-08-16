@@ -1,0 +1,34 @@
+<app-arrow-back routerLink="/admin"></app-arrow-back>
+<div class="row">
+  <div class="col-12">
+    <h1>Manage committees</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <app-pagination-table (delete)="deleteCommittee($event)" (edit)="editCommittee($event)"
+      [data]="committees"
+      [headers]="['ID', 'Name', 'Description']"
+      [keys]="['id', 'name', 'description']"
+      [showActionColumn]="true">
+    </app-pagination-table>
+  </div>
+</div>
+<div class="row" *showIfRole="'board'">
+  <div class="col-sm-auto col-6">
+    <button type="button" class="btn btn-primary" routerLink="add">
+      <i class="material-icons btn-icon">
+        add
+      </i>
+      Add committee
+    </button>
+  </div>
+  <div class="col-sm-auto ml-auto col-6">
+    <button type="button" class="btn btn-primary" routerLink="columns">
+      <i class="material-icons btn-icon">
+        storage
+      </i>
+      Manage extra columns
+    </button>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<app-arrow-back routerLink="/admin/contributions"></app-arrow-back>
+<div class="row">
+  <div class="col-12">
+    <h1>Add contribution</h1>
+  </div>
+</div>
+<app-contribution-form (save)="onSave($event)" (cancel)="onCancel()"></app-contribution-form>

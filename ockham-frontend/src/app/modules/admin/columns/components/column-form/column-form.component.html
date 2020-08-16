@@ -1,0 +1,36 @@
+<form [formGroup]="columnForm" (ngSubmit)="onSave()">
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="name">Column name*</label>
+        <input id="name" type="text" class="form-control" formControlName="name"
+               [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+          <div *ngIf="f.name.errors.required">Column name is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="column-type">Type*</label>
+        <select id="column-type" class="form-control" formControlName="type_id"
+                [ngClass]="{ 'is-invalid': submitted && f.type_id.errors }">
+          <option *ngFor="let type of columnTypes" [value]="type.id">
+            {{ type.name }}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.type_id.errors" class="invalid-feedback">
+          <div *ngIf="f.type_id.errors.required">Type is required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-auto">
+      <button type="submit" class="btn btn-success">Save</button>
+    </div>
+    <div class="col-auto ml-auto">
+      <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,40 @@
+<form [formGroup]="newsForm" (ngSubmit)="onSave()">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="title">Title*</label>
+        <input id="title" type="text" class="form-control" formControlName="title"
+               [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+        <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+          <div *ngIf="f.title.errors.required">Title is required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="content">Content*</label>
+        <app-html-editor id="content" name="content" formControlName="content" [ngClass]="{ 'is-invalid': submitted && f.content.errors }"></app-html-editor>
+        <div *ngIf="submitted && f.content.errors" class="invalid-feedback">
+          <div *ngIf="f.content.errors.required">Content is required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-flexible-column-form model="news" formControlName="flexible_column_values"></app-flexible-column-form>
+  <app-files-list action="upload" [files]="news ? news.files : []" (delete)="deleteFile($event)"></app-files-list>
+  <div class="row">
+    <div class="col-12">
+      <app-files-upload formControlName="uploadedFiles"></app-files-upload>
+    </div>
+  </div>
+  <div class="row pt-4">
+    <div class="col-auto">
+      <button type="submit" class="btn btn-success">Save</button>
+    </div>
+    <div class="col-auto ml-auto">
+      <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+    </div>
+  </div>
+</form>

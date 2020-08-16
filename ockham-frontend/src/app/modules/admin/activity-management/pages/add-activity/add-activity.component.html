@@ -1,0 +1,19 @@
+<app-arrow-back routerLink="/admin/activities"></app-arrow-back>
+<div class="row">
+  <div class="col">
+    <h1>Add activity</h1>
+  </div>
+</div>
+<app-activity-form #activityForm (save)="createActivity($event)"></app-activity-form>
+<hr>
+<h4>Activity Options <small>(optional)</small></h4>
+<app-option-form (submit)="addOption($event)" [action]="'add'"></app-option-form>
+<app-option-list canEdit="true" (editEmitter)="onEditOption($event)" (deleteEmitter)="deleteOption($event)" [options]="activityOptions"></app-option-list>
+<div class="row pt-3">
+  <div class="col-auto">
+    <button type="submit" class="btn btn-success" (click)="onSave()">Create activity</button>
+  </div>
+  <div class="col-auto ml-auto">
+    <button class="btn btn-danger" routerLink="/admin/activities">Cancel</button>
+  </div>
+</div>

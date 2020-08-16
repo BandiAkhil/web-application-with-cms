@@ -1,0 +1,7 @@
+<app-arrow-back routerLink="/admin/pages"></app-arrow-back>
+<div class="row">
+  <div class="col-12">
+    <h1>Edit page</h1>
+  </div>
+</div>
+<app-page-form [page]="page" (save)="onSave($event)" (cancel)="onCancel()"></app-page-form>

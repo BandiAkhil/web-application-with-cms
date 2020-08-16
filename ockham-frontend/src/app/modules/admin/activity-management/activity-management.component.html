@@ -1,0 +1,48 @@
+<app-arrow-back routerLink="/admin"></app-arrow-back>
+<div class="row justify-content-between">
+  <div class="col-sm-6 col-12">
+    <h1>Manage activities</h1>
+  </div>
+  <div class="col-sm-5 col-12">
+    <div class="row justify-content-end">
+      <div id="committee-select" class="col-sm-6 col-6">
+        <select class="form-control" [ngModel]="defaultCommittee" (ngModelChange)="onSelectChange($event)">
+          <option *ngFor="let c of committees" [ngValue]="c">
+            {{ c.name }}
+          </option>
+        </select>
+      </div>
+      <div class="col-sm-auto col-6">
+        <button type="button" class="btn btn-primary" routerLink="./add">
+          <i class="material-icons btn-icon">
+            add
+          </i>
+          Add activity
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <!--<app-activity-list [activities]="activities"></app-activity-list>-->
+    <app-pagination-table (delete)="onDeleteActivity($event)" (edit)="editActivity($event)"
+      [data]="activities"
+      [headers]="['Title', 'Description', 'Start Date', 'End Date', 'Location']"
+      [keys]="['title', 'description', 'start_date', 'end_date', 'location']"
+      [showActionColumn]="true"
+      [columnDefs]="columnDefs"
+    >
+    </app-pagination-table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-auto">
+    <button type="button" class="btn btn-primary" routerLink="columns">
+      <i class="material-icons btn-icon">
+        storage
+      </i>
+      Manage extra columns
+    </button>
+  </div>
+</div>

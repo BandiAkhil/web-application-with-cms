@@ -1,0 +1,56 @@
+{
+    "id": 1,
+    "notes": null,
+    "paid": false,
+    "activity_id": 1,
+    "created_at": "2020-04-13 17:29:10",
+    "updated_at": "2020-04-13 17:29:10",
+    "member": {
+        "id": 1,
+        "email": "test867568076@example.com",
+        "created_at": "2020-03-28 11:55:31",
+        "updated_at": "2020-03-28 11:55:31",
+        "last_name": "Wehner",
+        "insertion": null,
+        "first_name": "Erna",
+        "initials": "ck",
+        "address": "48360 Powlowski Circles\nDorisberg, DE 58112-7059",
+        "zip_code": "2445sb",
+        "residence": "Port Jodie",
+        "country": "Madagascar",
+        "phone_number": "(571) 485-8432",
+        "date_of_membership": "1988-06-03",
+        "remark": "Deserunt qui quae consequatur quaerat dolor vitae quis.",
+        "photos_allowed": true,
+        "location_signup": "Port Brandyn",
+        "memberable_type": "teacher",
+        "archived_at": null,
+        "role": {
+            "id": 4,
+            "name": "general_member",
+            "description": ""
+        },
+        "bank_account": null,
+        "memberable": {
+            "id": 1,
+            "department": "mollitia",
+            "employee_number": "m2234251",
+            "created_at": "2020-03-28 11:55:24",
+            "updated_at": "2020-03-28 11:55:24"
+        }
+    },
+    "answers": [
+        {
+            "question": "Would you like pizza?",
+            "required": true,
+            "type": {
+                "id": 2,
+                "name": "boolean"
+            },
+            "answer": true,
+            "option_id": 1,
+            "created_at": "2020-04-13 17:29:10",
+            "updated_at": "2020-04-13 17:29:10"
+        }
+    ]
+}

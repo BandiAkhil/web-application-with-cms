@@ -1,0 +1,16 @@
+p {
+  color: #757575 !important;
+}
+
+.editForm {
+  ::ng-deep {
+    h1,h1,h3,h4,h5,h6,p {
+      color: inherit;
+    }
+  }
+}
+
+
+hr {
+  border-top: 1px solid white;
+}

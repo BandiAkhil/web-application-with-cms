@@ -1,0 +1,8 @@
+<app-activity-form (save)="editActivity($event)" [activity]="activity">
+  <button class="btn btn-danger mr-2" (click)="onDelete('activity')">Delete</button>
+</app-activity-form>
+<hr>
+<h4>Activity Options <small>(optional)</small></h4>
+<app-option-form (submit)="addOption($event)" [action]="'add'"></app-option-form>
+<app-option-list (deleteEmitter)="onDelete('option', $event)"
+  [options]="activityOptions"></app-option-list>

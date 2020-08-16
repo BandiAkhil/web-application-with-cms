@@ -1,0 +1,44 @@
+<app-arrow-back routerLink="/admin"></app-arrow-back>
+<div class="row">
+  <div class="col-12">
+    <h1>Manage pages</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <app-pagination-table 
+      [data]="pages" 
+      [headers]="['Slug', 'Title', 'Created at', 'Last updated at']"
+      [keys]="['slug', 'title', 'created_at', 'updated_at']"
+      [showActionColumn]="true"
+      [customActionTemplate]="customActionTemplate"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)">
+
+      <ng-template #customActionTemplate let-row>
+        <i class="material-icons pointer" [routerLink]="'/pages/' + row.slug">
+          visibility
+        </i>
+      </ng-template>
+
+    </app-pagination-table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-auto">
+    <button type="button" class="btn btn-primary" routerLink="add">
+      <i class="material-icons btn-icon">
+        add
+      </i>
+      Add page
+    </button>
+  </div>
+  <div class="col-auto ml-auto">
+    <button type="button" class="btn btn-primary" (click)="openManagePageGroupsModal()">
+      <i class="material-icons btn-icon">
+        apps
+      </i>
+      Manage page groups
+    </button>
+  </div>
+</div>

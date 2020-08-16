@@ -1,0 +1,7 @@
+<app-arrow-back (click)="goBack()"></app-arrow-back>
+<div class="row">
+  <div class="col-12">
+    <h1>Edit {{ model }} column</h1>
+  </div>
+</div>
+<app-column-form *ngIf="column" [column]="column" (save)="onSave($event)" (cancel)="onCancel()"></app-column-form>

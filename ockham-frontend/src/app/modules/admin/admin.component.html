@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-12">
+    <h1>Manage</h1>
+  </div>
+</div>
+<div class="row">
+  <ng-container *ngFor="let section of sections">
+    <div class="col-lg-3 col-md-4 col-sm-6 section-padding" *showIfRole="section.requiredRole">
+      <div class="card text-center pointer" [routerLink]="section.linkTo">
+        <i class="material-icons icon-secondary">
+          {{ section.icon }}
+        </i>
+        <div class="card-body">
+          {{ section.name }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

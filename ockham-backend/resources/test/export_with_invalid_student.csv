@@ -1,0 +1,3 @@
+id,last_name,insertion,first_name,initials,email,role,address,zip_code,residence,country,phone_number,date_of_membership,remark,photos_allowed,location_signup,member_type,study_program_short,study_program_full,batch_bhp,batch_mhp,student_number,department,employee_number,has_bank_account,authorization_contribution,authorization_other,debtor_name,iban,bic
+1,One,,Member,MO,member.one@example.com,admin,"Drienerlolaan 5","7522 NB",Enschede,Netherlands,06-12345678,2020-04-01,"The best student",true,Enschede,student,BIT,"Business & IT",3,,,,,true,true,true,"Hr M One",NL91ABNA0417164300,
+2,Two,,Member,MT,member.two@example.com,general_member,,,,,,2020-03-03,,false,Enschede,teacher,,,,,,EEMCS,m12345678,false,,,,,

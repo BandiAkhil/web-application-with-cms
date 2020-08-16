@@ -1,0 +1,347 @@
+<div class="row" *ngIf="member && member.archived_at">
+  <div class="col-12">
+    <div class="alert alert-archive">
+      This member has been archived at {{ member.archived_at }}.
+    </div>
+  </div>
+</div>
+<app-arrow-back routerLink="/admin/members"></app-arrow-back>
+<div class="row">
+  <div class="col-12">
+    <h1 *ngIf="isEditRoute()">Edit Member</h1>
+    <h1 *ngIf="isAddRoute()">Add Member</h1>
+  </div>
+</div>
+<form [formGroup]="memberForm" (ngSubmit)="onSave()">
+  <div class="row">
+    <div class="col-md-5 col-sm-12">
+      <div class="form-group">
+        <label for="first-name">First name*</label>
+        <input id="first-name" type="text" class="form-control" formControlName="first_name"
+               [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }">
+        <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+          <div *ngIf="f.first_name.errors.required">First name is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 col-sm-12">
+      <div class="form-group">
+        <label for="insertion">Insertion</label>
+        <input id="insertion" type="text" class="form-control" formControlName="insertion">
+      </div>
+    </div>
+    <div class="col-md-5 col-sm-12">
+      <div class="form-group">
+        <label for="last-name">Last name*</label>
+        <input id="last-name" type="text" class="form-control" formControlName="last_name"
+               [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
+        <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+          <div *ngIf="f.last_name.errors.required">Last name is required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="initials">Initials*</label>
+        <input id="initials" type="text" class="form-control" formControlName="initials"
+               [ngClass]="{ 'is-invalid': submitted && f.initials.errors }">
+        <div *ngIf="submitted && f.initials.errors" class="invalid-feedback">
+          <div *ngIf="f.initials.errors.required">Initials is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="phone-number">Phone number</label>
+        <input id="phone-number" type="tel" class="form-control" formControlName="phone_number">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input id="address" type="text" class="form-control" formControlName="address">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="zip-code">Zip code</label>
+        <input id="zip-code" type="text" class="form-control" formControlName="zip_code">
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="residence">Residence</label>
+        <input id="residence" type="text" class="form-control" formControlName="residence">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input id="country" type="text" class="form-control" formControlName="country">
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="email">Email*</label>
+        <input id="email" type="email" class="form-control" formControlName="email"
+               [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+          <div *ngIf="f.email.errors.required">Email is required</div>
+          <div *ngIf="f.email.errors.email">Invalid email</div>
+          <div *ngIf="f.email.errors.alreadyInUse">Email is already registered</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr/>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="memberable_type" id="student" value="student" formControlName="memberable_type">
+        <label class="form-check-label" for="student">Student</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="memberable_type" id="teacher" value="teacher" formControlName="memberable_type">
+        <label class="form-check-label" for="teacher">Teacher</label>
+      </div>
+    </div>
+  </div>
+
+  <div [hidden]="memberType !== 'student'" [formGroup]="studentForm" class="pt-4">
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="study-program">Study program*</label>
+          <select id="study-program" class="form-control" formControlName="study_program_id"
+                  [ngClass]="{ 'is-invalid': studentSubmitted && sf.study_program_id.errors }">
+            <option *ngFor="let p of studyPrograms" [value]="p.id">
+              {{ p.full_name }} ({{ p.short_name }})
+            </option>
+          </select>
+          <div *ngIf="studentSubmitted && sf.study_program_id.errors" class="invalid-feedback">
+            <div *ngIf="sf.study_program_id.errors.required">Study program is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="student-number">Student number*</label>
+          <input id="student-number" type="text" class="form-control" formControlName="student_number"
+                 [ngClass]="{ 'is-invalid': studentSubmitted && sf.student_number.errors }">
+          <div *ngIf="studentSubmitted && sf.student_number.errors" class="invalid-feedback">
+            <div *ngIf="sf.student_number.errors.required">Student number is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="programme">Group Honours programme*</label>
+          <div>
+            <div class="form-check form-check-inline">
+              <input id="bachelor" class="form-check-input" type="radio" name="track" value="bachelor" formControlName="track"
+                     [ngClass]="{ 'is-invalid': studentSubmitted && sf.track.errors }">
+              <label class="form-check-label" for="bachelor">BSc</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input id="master" class="form-check-input" type="radio" name="track" value="master" formControlName="track"
+                     [ngClass]="{ 'is-invalid': studentSubmitted && sf.track.errors }">
+              <label class="form-check-label" for="master">MSc</label>
+            </div>
+            <div class="form-group">
+              <input id="programme" type="number" class="form-control" formControlName="track_number"
+                     [ngClass]="{ 'is-invalid': studentSubmitted && sf.track_number.errors }">
+              <div *ngIf="studentSubmitted && sf.track_number.errors" class="invalid-feedback">
+                <div *ngIf="sf.track_number.errors.required">Track number is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="memberType !== 'teacher'" [formGroup]="teacherForm" class="pt-4">
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="department">Department/Chair*</label>
+          <input id="department" type="text" class="form-control" formControlName="department"
+                 [ngClass]="{ 'is-invalid': teacherSubmitted && tf.department.errors }">
+          <div *ngIf="teacherSubmitted && tf.department.errors" class="invalid-feedback">
+            <div *ngIf="tf.department.errors.required">Department is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="employee-number">Employee number*</label>
+          <input id="employee-number" type="text" class="form-control" formControlName="employee_number"
+                 [ngClass]="{ 'is-invalid': teacherSubmitted && tf.employee_number.errors }">
+          <div *ngIf="teacherSubmitted && tf.employee_number.errors" class="invalid-feedback">
+            <div *ngIf="tf.employee_number.errors.required">Employee number is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-check">
+        <input id="photos-allowed" type="checkbox" class="form-check-input" formControlName="photos_allowed">
+        <label class="form-check-label" for="photos-allowed">Allow H.V. Ockham to take pictures during activities and publish these on the website.</label>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-4">
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="place">Place*</label>
+        <input id="place" type="text" class="form-control" formControlName="location_signup"
+               [ngClass]="{ 'is-invalid': submitted && f.location_signup.errors }">
+        <div *ngIf="submitted && f.location_signup.errors" class="invalid-feedback">
+          <div *ngIf="f.location_signup.errors.required">Place is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="date-of-membership">Date of membership*</label>
+        <div class="input-group">
+          <input id="date-of-membership" class="form-control date-picker-input" matInput [matDatepicker]="picker" formControlName="date_of_membership"
+                 [ngClass]="{ 'is-invalid': submitted && f.date_of_membership.errors }">
+          <div *ngIf="submitted && f.date_of_membership.errors" class="invalid-feedback">
+            <div *ngIf="f.date_of_membership.errors.required">Date of membership is required</div>
+          </div>
+          <div class="input-group-prepend">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="row" *ngIf="!sepa && (bankAccountForm.value.iban || bankAccountForm.value.debtor_name || bankAccountForm.value.bic)">
+    <div class="col-md-12">
+      <div class="alert alert-warning">
+        <i class="material-icons text-icon">
+          warning
+        </i>
+        Unchecking SEPA Authorization will delete it.
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" [checked]="sepa" (change)="sepa = !sepa">
+        <h5>SEPA Authorization (Optional)</h5>
+      </div>
+    </div>
+  </div>
+  <div class="container sepa-container" [hidden]="!sepa" [formGroup]="bankAccountForm">
+    <div class="row pb-4">
+      <div class="col-md-12">
+        <div class="form-check">
+          <input id="authorization-contribution" type="checkbox" class="form-check-input" formControlName="authorization_contribution">
+          <label class="form-check-label" for="authorization-contribution">
+            I authorize HONOURS VERENIGING OCKHAM to send recurrent collection instructions to my bank to debit my account and
+            I authorize my bank to debit my account on a recurrent basis in accordance with the contribution collection instructions
+            from HONOURS VERENIGING OCKHAM. As part of your rights, you are entitled to a refund from your bank under the terms
+            and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on
+            which your account was debited.
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-4">
+      <div class="col-md-12">
+        <div class="form-check">
+          <input id="authorization-other" type="checkbox" class="form-check-input" formControlName="authorization_other">
+          <label class="form-check-label" for="authorization-other">
+            I also want to authorize HONOURS VERENIGING OCKHAM to send recurrent collection instructions to my bank concerning
+            debt other than contribution.
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-4">
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="debtor-name">Debtor name*</label>
+          <input id="debtor-name" type="text" class="form-control" formControlName="debtor_name"
+                 [ngClass]="{ 'is-invalid': sepaSubmitted && bf.debtor_name.errors }">
+          <div *ngIf="sepaSubmitted && bf.debtor_name.errors" class="invalid-feedback">
+            <div *ngIf="bf.debtor_name.errors.required">Debtor name is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8 col-sm-12">
+        <label for="iban">IBAN*</label>
+        <input id="iban" type="text" class="form-control" formControlName="iban"
+               [ngClass]="{ 'is-invalid': sepaSubmitted && bf.iban.errors }">
+        <div *ngIf="sepaSubmitted && bf.iban.errors" class="invalid-feedback">
+          <div *ngIf="bf.iban.errors.required">IBAN is required</div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-12">
+        <label for="bic">BIC</label>
+        <input id="bic" type="text" class="form-control" formControlName="bic">
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="remark">Remark</label>
+        <textarea rows="4" id="remark" type="text" class="form-control" formControlName="remark"></textarea>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="form-group">
+        <label for="role">Role*</label>
+        <select id="role" class="form-control" formControlName="role_id" [ngClass]="{ 'is-invalid': submitted && f.role_id.errors }">>
+          <option *ngFor="let r of roles" [value]="r.id">
+            {{ r.name | snakeCaseToText }}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.role_id.errors" class="invalid-feedback">
+          <div *ngIf="f.role_id.errors.required">Role is required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <app-flexible-column-form model="members" formControlName="flexible_column_values"></app-flexible-column-form>
+  <div class="row pt-3">
+    <div class="col-sm-auto col-3">
+      <button type="submit" class="btn btn-success">Save</button>
+    </div>
+    <div class="col-sm-auto col-9" *ngIf="isAddRoute()">
+      <button class="btn btn-success" type="button" (click)="onSave(true)">Save and add another member</button>
+    </div>
+    <div class="col-sm-auto col-4" *ngIf="isEditRoute()">
+      <button class="btn btn-danger" type="button" (click)="deleteMember()">Delete this member</button>
+    </div>
+    <div class="col-sm-auto col-5" *ngIf="isEditRoute()">
+      <button class="btn btn-archive" type="button" (click)="archiveMember()">Archive this member</button>
+    </div>
+    <div id="cancel" class="col-sm-auto ml-auto col-12">
+      <button class="btn btn-primary" type="button" routerLink="/admin/members">Cancel</button>
+    </div>
+  </div>
+</form>

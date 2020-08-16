@@ -1,0 +1,66 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Manage page groups</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="pageGroupForm" (ngSubmit)="onSave()">
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="name">Name*</label>
+          <input id="name" type="text" class="form-control" formControlName="name"
+                 [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Name is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-auto ml-auto">
+        <button type="submit" class="btn btn-success">Add</button>
+      </div>
+    </div>
+  </form>
+  <hr>
+  <table class="table table-light w-100">
+    <tr>
+      <th style="width: 60%">Name</th>
+      <th style="width: 40%">Actions</th>
+    </tr>
+    <tr *ngFor="let group of pageGroups">
+      <ng-container *ngIf="editingPageGroup?.id === group.id; else viewMode">
+        <td>
+          <input type="text" class="form-control" [(ngModel)]="editingPageGroup.name">
+        </td>
+        <td>
+          <i class="material-icons" (click)="onEdit()" 
+            [class.pointer]="editingPageGroup.name" 
+            [class.text-success]="editingPageGroup.name">
+            save
+          </i>
+          <i class="material-icons pointer text-danger" (click)="onEditStop()">
+            close
+          </i>
+        </td>
+      </ng-container>
+      <ng-template #viewMode>
+        <td>{{ group.name }}</td>
+        <td>
+          <i class="material-icons pointer text-danger disabled" (click)="onDelete(group)">
+            delete
+          </i>
+          <i class="material-icons pointer text-warning" (click)="onEditStart(group)">
+            edit
+          </i>
+        </td>
+      </ng-template>
+    </tr>
+  </table>  
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary ml-auto" (click)="close()">Close</button>
+</div>
+

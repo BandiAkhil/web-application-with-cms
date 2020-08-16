@@ -1,0 +1,69 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Export contribution</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="exportForm" (ngSubmit)="export()">
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="category">Category*</label>
+          <input id="category" type="text" class="form-control" formControlName="category"
+                 [ngClass]="{ 'is-invalid': submitted && f.category.errors }">
+          <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
+            <div *ngIf="f.category.errors.required">Category is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="contribution_id">Contribution*</label>
+          <select id="contribution_id" class="form-control" formControlName="contribution_id"
+                  [ngClass]="{ 'is-invalid': submitted && f.contribution_id.errors }">
+            <option *ngFor="let c of contributions" [value]="c.id">
+              {{ c.identifier }}
+            </option>
+          </select>
+          <div *ngIf="submitted && f.contribution_id.errors" class="invalid-feedback">
+            <div *ngIf="f.contribution_id.errors.required">Contribution is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="programme">Group Honours programme*</label>
+          <div>
+            <div class="form-check form-check-inline">
+              <input id="bachelor" class="form-check-input" type="radio" name="track" value="bachelor" formControlName="track"
+                     [ngClass]="{ 'is-invalid': submitted && f.track.errors }">
+              <label class="form-check-label" for="bachelor">BSc</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input id="master" class="form-check-input" type="radio" name="track" value="master" formControlName="track"
+                     [ngClass]="{ 'is-invalid': submitted && f.track.errors }">
+              <label class="form-check-label" for="master">MSc</label>
+            </div>
+            <div class="form-group">
+              <input id="programme" type="number" class="form-control" formControlName="track_number"
+                     [ngClass]="{ 'is-invalid': submitted && f.track_number.errors }">
+              <div *ngIf="submitted && f.track_number.errors" class="invalid-feedback">
+                <div *ngIf="f.track_number.errors.required">Track number is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="export()">Export</button>
+  <button type="button" class="btn btn-primary ml-auto" (click)="close()">Close</button>
+</div>
+

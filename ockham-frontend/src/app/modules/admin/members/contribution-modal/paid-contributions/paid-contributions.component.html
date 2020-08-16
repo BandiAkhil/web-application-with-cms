@@ -1,0 +1,20 @@
+<h6>Paid contributions: </h6>
+<table class="table table-light  w-100">
+  <tr>
+    <th>Cont. Identifier</th>
+    <th>Payment method</th>
+    <th>Actions</th>
+  </tr>
+  <tr *ngFor="let c of contributions">
+    <td>{{ c.contribution.identifier }}</td>
+    <td>{{ c.payment_method }}</td>
+    <td>
+      <i class="material-icons pointer text-danger" (click)="onDelete(c)">
+        delete
+      </i>
+      <i class="material-icons pointer text-warning" (click)="onEdit(c)">
+        edit
+      </i>
+    </td>
+  </tr>
+</table>
