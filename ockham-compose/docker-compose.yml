@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+  nginx:
+    image: registry.gitlab.com/design-project-group-c/ockham-compose:$CI_COMMIT_REF_SLUG
+    container_name: ockham-nginx
+    restart: unless-stopped
+    volumes:
+      - public_backend:/var/www/public
+    ports:
+      - 5000:80
+    depends_on:
+      - frontend
+      - backend
+
+  frontend:
+    image: registry.gitlab.com/design-project-group-c/ockham-frontend:$TAG_FRONTEND
+    container_name: ockham-frontend
+    restart: unless-stopped
+
+  backend:
+    image: registry.gitlab.com/design-project-group-c/ockham-backend:$TAG_BACKEND
+    container_name: ockham-backend
+    restart: unless-stopped
+    volumes:
+      - public_backend:/var/www/public
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:12-alpine
+    container_name: ockham-db
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=$DB_USERNAME
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_DB=$DB_DATABASE
+    
+volumes:
+  public_backend:
+  postgres_data:

@@ -1,0 +1,60 @@
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+
+services:
+  - docker:19.03.5-dind
+
+stages:
+  - build
+  - deploy
+  - post-deploy
+
+package:
+  stage: build
+  image: docker
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -t $IMAGE_TAG ./nginx
+    - docker push $IMAGE_TAG
+
+deploy:
+  stage: deploy
+  environment:
+    name: acceptance
+    url: https://$ACC_HOST
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$ACC_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H $ACC_HOST >> ~/.ssh/known_hosts
+  script:
+    - cp .env.example .env
+    - echo "TAG_FRONTEND=${TAG_FRONTEND:=master}" >> .env
+    - echo "TAG_BACKEND=${TAG_BACKEND:=master}" >> .env
+    - echo "DB_USERNAME=$ACC_DB_USERNAME" >> .env
+    - echo "DB_PASSWORD=$ACC_DB_PASSWORD" >> .env
+    - echo "JWT_KEY=$ACC_JWT_KEY" >> .env
+    - echo "APP_KEY=$ACC_APP_KEY" >> .env
+    - echo "MAILCHIMP_API_KEY=$ACC_MAILCHIMP_API_KEY" >> .env
+    - echo "MAIL_USERNAME=$ACC_MAIL_USERNAME" >> .env
+    - echo "MAIL_PASSWORD=$ACC_MAIL_PASSWORD" >> .env
+    - echo "MAIL_FROM_ADDRESS=$MAIL_FROM_ADDRESS" >> .env
+    - echo "DEFAULT_MAILING_LIST_ID=$DEFAULT_MAILING_LIST_ID" >> .env
+    - echo "STRIPE_SECRET_KEY=$ACC_STRIPE_SECRET_KEY" >> .env
+    - scp docker-compose.yml .env $ACC_USER@$ACC_HOST:$ACC_PATH
+    - ssh $ACC_USER@$ACC_HOST "export CI_COMMIT_REF_SLUG=$CI_COMMIT_REF_SLUG; docker login -u $ACC_GITLAB_USER -p $ACC_GITLAB_TOKEN $CI_REGISTRY; cd $ACC_PATH; docker-compose pull; docker-compose up -d"
+  when: manual
+    
+migrate:
+  stage: post-deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$ACC_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H $ACC_HOST >> ~/.ssh/known_hosts
+  script:
+    - ssh $ACC_USER@$ACC_HOST "cd $ACC_PATH && docker-compose exec -T backend php artisan migrate --force"
+  when: manual
